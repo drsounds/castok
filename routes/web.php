@@ -19,7 +19,7 @@ use Laravel\Socialite\Facades\Socialite;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Wel come', [
+    return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -44,6 +44,8 @@ Route::get('/auth/spotify/redirect', function () {
 
 Route::get('/auth/spotify/callback', function () {
     $user = Socialite::driver('spotify')->stateless()->user();
-    Session::put('spotifyUser', $user);
+    Session::put('spotifyUser', [
+        'token' => $user->token
+    ]);
     return response()->redirectTo('/dashboard');
 });

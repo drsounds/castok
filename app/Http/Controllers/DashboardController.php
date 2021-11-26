@@ -20,7 +20,7 @@ class DashboardController extends Controller
             return redirect('/auth/spotify/redirect');
         }
         return Inertia::render('Dashboard', [
-            'spotifyAccessToken' => $spotifyUser->token
+            'spotifyAccessToken' => $spotifyUser['token']
         ]);
     }
 }

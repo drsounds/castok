@@ -20667,46 +20667,24 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   setup: function setup(props, _ref) {
-    var emit = _ref.emit;
-    var feed = (0,vue__WEBPACK_IMPORTED_MODULE_6__.reactive)([]);
-    var status = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(0);
+    var emit = _ref.emit,
+        $els = _ref.$els;
+    var feed = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)([]);
+    var status = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(9);
     var spotifyDeviceId = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
     var player = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
-
-    var cb = function cb() {};
-
-    window.onSpotifyWebPlaybackSDKReady = function () {
-      window.player = new Spotify.Player({
-        name: 'Castok',
-        getOAuthToken: function getOAuthToken(cb) {
-          cb(props.spotifyAccessToken);
-        },
-        volume: 0.5
-      });
-      window.player.addListener('ready', function (_ref2) {
-        var device_id = _ref2.device_id;
-        spotifyDeviceId.value = device_id;
-        status.value = 9;
-      }); // Not Ready
-
-      window.player.addListener('not_ready', function (_ref3) {
-        var device_id = _ref3.device_id;
-        console.log('Device ID has gone offline', device_id);
-      });
-      window.player.connect();
-    };
 
     var onSlideChange = function onSlideChange(swiper) {
       var index = swiper.activeIndex;
       var episode = feed.value[index];
 
       if (episode) {
-        play(episode.uri);
+        play(episode.audio_preview_url);
       }
     };
 
-    var play = function play(uri) {
-      playSpotifyTrack(uri);
+    var play = function play() {
+      $els.audio.load(url);
     };
 
     var refresh = function refresh() {
@@ -24911,6 +24889,9 @@ var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_11 = [_hoisted_10];
+var _hoisted_12 = {
+  ref: "audio"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_swiper_slide = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("swiper-slide");
 
@@ -24918,6 +24899,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_ctx.status == 200 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_swiper, {
     key: 0,
+    direction: "vertical",
     style: {
       "left": "0",
       "top": "0",
@@ -24928,8 +24910,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "align-items": "center",
       "justify-content": "center"
     },
-    "slides-per-view": 3,
-    "space-between": 50,
+    "slides-per-view": 1,
     onSwiper: _ctx.onSwiper,
     onSlideChange: _ctx.onSlideChange
   }, {
@@ -24939,6 +24920,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           key: object.id,
           style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
             backgroundImage: 'url(' + object.images[0].url + ')',
+            backgroundSize: 'cover',
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'stretch',
@@ -24972,7 +24954,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function () {
       return _ctx.onStartFeedClicked && _ctx.onStartFeedClicked.apply(_ctx, arguments);
     })
-  }, "Start feed")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, _hoisted_11))]);
+  }, "Start feed")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, _hoisted_11)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("audio", _hoisted_12, null, 512
+  /* NEED_PATCH */
+  )]);
 }
 
 /***/ }),

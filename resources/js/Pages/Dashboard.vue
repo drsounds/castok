@@ -1,45 +1,48 @@
 <template>
     <div style="display: flex; flex-direction: column; position: absolute; left: 0; top: 0; width: 100%; height: 100%;">
 
-    <swiper
-        v-if="status == 200"
-        style="left: 0; top: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center"    :slides-per-view="3"
-        :space-between="50"
-        @swiper="onSwiper"
-        @slideChange="onSlideChange"
-    >
-        <swiper-slide
-            v-for="object in feed" :key="object.id"
-            :style="{
-                backgroundImage: 'url(' + object.images[0].url + ')',
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'stretch',
-                justifyContent: 'stretch'
-            }"
-            @slidechange="onSlideChange"
+        <swiper
+            v-if="status == 200"
+            direction="vertical"
+            style="left: 0; top: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" 
+            :slides-per-view="1"
+            @swiper="onSwiper"
+            @slideChange="onSlideChange"
         >
-            <div :style="{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'}">
-                <p>{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
+            <swiper-slide
+                v-for="object in feed" :key="object.id"
+                :style="{
+                    backgroundImage: 'url(' + object.images[0].url + ')',
+                    backgroundSize: 'cover',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'stretch',
+                    justifyContent: 'stretch'
+                }"
+                @slidechange="onSlideChange"
+            >
+                <div :style="{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'}">
+                    <p>{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
 
-            </div>
-            <div :style="{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'}">
+                </div>
+                <div :style="{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'}">
 
-            </div>
+                </div>
 
-        </swiper-slide>
-    </swiper>
-    <div  v-else-if="status === 100" style="left: 0; top: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center">
+            </swiper-slide>
+        </swiper>
+        <div  v-else-if="status === 100" style="left: 0; top: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center">
 
-        <h1>Loading feed for you. Please wait</h1>
+            <h1>Loading feed for you. Please wait</h1>
+        </div>
+        <div v-else-if="status === 9">
+            <button @click="onStartFeedClicked">Start feed</button>
+        </div>
+        <div v-else>
+            <p>Loading Spotify Web Player</p>
+        </div>
+        <audio ref="audio" />
     </div>
-    <div v-else-if="status === 9">
-        <button @click="onStartFeedClicked">Start feed</button>
-    </div>
-    <div v-else>
-        <p>Loading Spotify Web Player</p>
-    </div>
-</div>
 
 </template>
 
@@ -72,51 +75,28 @@ import {defineComponent, reactive, ref} from 'vue'
                 type: String
             }
         },
-        setup(props, { emit }) {
-            const feed =  reactive([])
-            const status = ref(0);
+        setup(props, { emit, $els }) {
+            const feed =  ref([])
+            const status = ref(9);
             const spotifyDeviceId = ref(null);
             const player = ref(null);
 
 
-
-            const cb = () => {
-            }
-
-            window.onSpotifyWebPlaybackSDKReady = () => {
-                window.player = new Spotify.Player({
-                    name: 'Castok',
-                    getOAuthToken: cb => {
-                        cb(props.spotifyAccessToken);
-                    },
-                    volume: 0.5
-                });
-                window.player.addListener('ready', ({ device_id }) => {
-                    spotifyDeviceId.value = device_id
-                    status.value = 9;
-                });
-
-                // Not Ready
-                window.player.addListener('not_ready', ({ device_id }) => {
-                    console.log('Device ID has gone offline', device_id);
-                });
-                window.player.connect();
-            }
+ 
             const onSlideChange = (swiper) => {
                 const index = swiper.activeIndex;
                 const episode = feed.value[index];
                 if (episode) {
-                    play(episode.uri)
+                    play(episode.audio_preview_url);
                 }
             }
-            const play = (uri) => {
-                playSpotifyTrack(uri)
+            const play = () => {
+                $els.audio.load(url);
             }
             const refresh = () => {
                 getPodcastFeed().then((result) => {
                    status.value = result.status
-                   feed.value = result.objects
-
+                   feed.value = result.objects 
                 });
             }
             const onStartFeedClicked = () => {
