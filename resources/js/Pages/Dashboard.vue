@@ -26,7 +26,7 @@
 
                 </div>
                 <div :style="{display: 'flex', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
-
+                
                 </div>
 
             </swiper-slide>

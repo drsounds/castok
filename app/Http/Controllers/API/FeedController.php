@@ -20,10 +20,11 @@ class FeedController extends Controller {
         }
         $result = ['objects' => []];
         $savedShows = $api->getMySavedShows()->items;
-
-        for($i = 0; $i < count($savedShows) && $i < 10; $i++) {
+        shuffle($savedShows);
+        for($i = 0; $i < count($savedShows) && $i < 20; $i++) {
             $show = $savedShows[array_rand($savedShows)];
             $episodes = $api->getShowEpisodes($show->show->id)->items;
+            shuffle($episodes);
             if (count($episodes) > 0) {
                 $episode = $episodes[array_rand($episodes)];
                 $result['objects'][] = $episode;
