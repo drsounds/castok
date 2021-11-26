@@ -20667,12 +20667,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   setup: function setup(props, _ref) {
-    var emit = _ref.emit,
-        $els = _ref.$els;
+    var emit = _ref.emit;
     var feed = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)([]);
     var status = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(9);
     var spotifyDeviceId = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
     var player = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
+    var audio = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
 
     var onSlideChange = function onSlideChange(swiper) {
       var index = swiper.activeIndex;
@@ -20683,14 +20683,21 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
 
-    var play = function play() {
-      $els.audio.load(url);
+    var play = function play(url) {
+      audio.value.autoPlay = true;
+      audio.value.src = url;
+      audio.value.play();
     };
 
     var refresh = function refresh() {
+      status.value = 100;
       (0,_actions_feed__WEBPACK_IMPORTED_MODULE_1__.getPodcastFeed)().then(function (result) {
         status.value = result.status;
         feed.value = result.objects;
+
+        if (result.objects.length > 0) {
+          play(result.objects[0].audio_preview_url);
+        }
       });
     };
 
@@ -20704,7 +20711,8 @@ __webpack_require__.r(__webpack_exports__);
       status: status,
       onSlideChange: onSlideChange,
       onStartFeedClicked: onStartFeedClicked,
-      refresh: refresh
+      refresh: refresh,
+      audio: audio
     };
   }
 }));
@@ -24837,7 +24845,9 @@ var _hoisted_1 = {
 };
 var _hoisted_2 = {
   style: {
+    color: 'white',
     display: 'flex',
+    padding: 20,
     flexDirection: 'column',
     justifyContent: 'flex-end'
   }
@@ -24851,6 +24861,7 @@ var _hoisted_3 = {
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   style: {
     display: 'flex',
+    padding: 20,
     flexDirection: 'column',
     justifyContent: 'flex-end'
   }
@@ -24861,10 +24872,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_5 = {
   key: 1,
   style: {
-    "left": "0",
-    "top": "0",
-    "width": "100%",
-    "height": "100%",
+    "flex": "1",
     "display": "flex",
     "flex-direction": "column",
     "align-items": "center",
@@ -24878,7 +24886,13 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 
 var _hoisted_7 = [_hoisted_6];
 var _hoisted_8 = {
-  key: 2
+  key: 2,
+  style: {
+    "flex": "1",
+    "display": "flex",
+    "align-items": "center",
+    "justify-content": "center"
+  }
 };
 var _hoisted_9 = {
   key: 3
@@ -24951,6 +24965,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, 8
   /* PROPS */
   , ["onSwiper", "onSlideChange"])) : _ctx.status === 100 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, _hoisted_7)) : _ctx.status === 9 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "button",
     onClick: _cache[0] || (_cache[0] = function () {
       return _ctx.onStartFeedClicked && _ctx.onStartFeedClicked.apply(_ctx, arguments);
     })

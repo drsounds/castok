@@ -21,22 +21,22 @@
                 }"
                 @slidechange="onSlideChange"
             >
-                <div :style="{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'}">
+                <div :style="{color: 'white', display: 'flex', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
                     <p>{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
 
                 </div>
-                <div :style="{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'}">
+                <div :style="{display: 'flex', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
 
                 </div>
 
             </swiper-slide>
         </swiper>
-        <div  v-else-if="status === 100" style="left: 0; top: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center">
+        <div  v-else-if="status === 100" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center">
 
             <h1>Loading feed for you. Please wait</h1>
         </div>
-        <div v-else-if="status === 9">
-            <button @click="onStartFeedClicked">Start feed</button>
+        <div v-else-if="status === 9" style="flex: 1; display: flex; align-items: center; justify-content: center">
+            <button class="button" @click="onStartFeedClicked">Start feed</button>
         </div>
         <div v-else>
             <p>Loading Spotify Web Player</p>
@@ -75,12 +75,12 @@ import {defineComponent, reactive, ref} from 'vue'
                 type: String
             }
         },
-        setup(props, { emit, $els }) {
+        setup(props, { emit }) {
             const feed =  ref([])
             const status = ref(9);
             const spotifyDeviceId = ref(null);
             const player = ref(null);
-
+            const audio = ref(null);
 
  
             const onSlideChange = (swiper) => {
@@ -90,13 +90,20 @@ import {defineComponent, reactive, ref} from 'vue'
                     play(episode.audio_preview_url);
                 }
             }
-            const play = () => {
-                $els.audio.load(url);
+            const play = (url) => { 
+                audio.value.autoPlay = true;
+                audio.value.src = url;  
+                audio.value.play()
+                
             }
             const refresh = () => {
+              status.value = 100;
                 getPodcastFeed().then((result) => {
                    status.value = result.status
                    feed.value = result.objects 
+                   if (result.objects.length > 0) {
+                     play(result.objects[0].audio_preview_url);
+                   }
                 });
             }
             const onStartFeedClicked = () => {
@@ -108,7 +115,8 @@ import {defineComponent, reactive, ref} from 'vue'
                 status,
                 onSlideChange,
                 onStartFeedClicked,
-                refresh
+                refresh,
+                audio
             }
         }
     })
