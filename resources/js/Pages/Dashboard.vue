@@ -21,7 +21,7 @@
                 }"
                 @slidechange="onSlideChange"
             >
-                <div :style="{color: 'white', display: 'flex', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
+                <div :style="{color: 'white', display: 'flex', padding: '20pt', flexDirection: 'column', justifyContent: 'flex-end'}">
                     <p>{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
 
                 </div>
@@ -32,11 +32,11 @@
             </swiper-slide>
         </swiper>
         <div  v-else-if="status === 100" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center">
-
+            <ClipLoader color="white" />
             <h1>Loading feed for you. Please wait</h1>
         </div>
         <div v-else-if="status === 9" style="flex: 1; display: flex; align-items: center; justify-content: center">
-            <button class="button" @click="onStartFeedClicked">Start feed</button>
+            <button class="btn btn-primary" @click="onStartFeedClicked">Start feed</button>
         </div>
         <div v-else>
             <p>Loading Spotify Web Player</p>
@@ -56,13 +56,15 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import {defineComponent, reactive, ref} from 'vue'
-    import AppLayout from '@/Layouts/AppLayout.vue'
-    import Welcome from '@/Jetstream/Welcome.vue'
+import AppLayout from '@/Layouts/AppLayout.vue'
+import Welcome from '@/Jetstream/Welcome.vue'
+import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
 
     export default defineComponent({
 
         components: {
             AppLayout,
+            ClipLoader,
             Welcome,
             Swiper,
             SwiperSlide

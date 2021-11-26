@@ -1,3 +1,19 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+body {
+  background: black;
+  color: white;
+}
+.btn {
+  padding: 2pt 15pt;
+  border-radius: 120pt;
+}
+.btn-primary {
+  background: white;
+  color: black;
+}
+.btn-spotify {
+  background: #1D8954;
+  color: white;
+}

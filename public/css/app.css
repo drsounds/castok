@@ -1861,6 +1861,22 @@ select {
 .ease-in {
 	transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
+body {
+  background: black;
+  color: white;
+}
+.btn {
+  padding: 2pt 15pt;
+  border-radius: 120pt;
+}
+.btn-primary {
+  background: white;
+  color: black;
+}
+.btn-spotify {
+  background: #1D8954;
+  color: white;
+}
 .hover\:border-gray-300:hover {
 	--tw-border-opacity: 1;
 	border-color: rgba(209, 213, 219, var(--tw-border-opacity));
@@ -2076,10 +2092,6 @@ select {
 		margin-left: 1.5rem;
 	}
 
-	.sm\:ml-0 {
-		margin-left: 0px;
-	}
-
 	.sm\:block {
 		display: block;
 	}
@@ -2094,10 +2106,6 @@ select {
 
 	.sm\:h-10 {
 		height: 2.5rem;
-	}
-
-	.sm\:h-20 {
-		height: 5rem;
 	}
 
 	.sm\:w-10 {
@@ -2223,10 +2231,6 @@ select {
 	.sm\:text-left {
 		text-align: left;
 	}
-
-	.sm\:text-right {
-		text-align: right;
-	}
 }
 @media (min-width: 768px) {
 
@@ -2277,4 +2281,3 @@ select {
 		padding-right: 2rem;
 	}
 }
-
