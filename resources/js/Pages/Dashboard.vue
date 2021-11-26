@@ -33,7 +33,7 @@
 
         <h1>Loading feed for you. Please wait</h1>
     </div>
-    <div v-else-if="status === 10">
+    <div v-else-if="status === 9">
         <button @click="onStartFeedClicked">Start feed</button>
     </div>
     <div v-else>
@@ -52,7 +52,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import {defineComponent, reactive} from 'vue'
+import {defineComponent, reactive, ref} from 'vue'
     import AppLayout from '@/Layouts/AppLayout.vue'
     import Welcome from '@/Jetstream/Welcome.vue'
 
@@ -65,6 +65,9 @@ import {defineComponent, reactive} from 'vue'
             SwiperSlide
         },
         props: {
+            spotifyAccessToken: {
+                type: String
+            },
             spotifyDeviceId: {
                 type: String
             }
@@ -74,14 +77,27 @@ import {defineComponent, reactive} from 'vue'
             const status = ref(0);
             const spotifyDeviceId = ref(null);
             const player = ref(null);
-            window.cb = () => {
-                status.value = 9;
-                window.player.value.addListener('ready', ({ device_id }) => {
-                    props.deviceId = device_id
+
+
+
+            const cb = () => {
+            }
+
+            window.onSpotifyWebPlaybackSDKReady = () => {
+                window.player = new Spotify.Player({
+                    name: 'Castok',
+                    getOAuthToken: cb => {
+                        cb(props.spotifyAccessToken);
+                    },
+                    volume: 0.5
+                });
+                window.player.addListener('ready', ({ device_id }) => {
+                    spotifyDeviceId.value = device_id
+                    status.value = 9;
                 });
 
                 // Not Ready
-                window.player.value.addListener('not_ready', ({ device_id }) => {
+                window.player.addListener('not_ready', ({ device_id }) => {
                     console.log('Device ID has gone offline', device_id);
                 });
                 window.player.connect();
@@ -110,6 +126,7 @@ import {defineComponent, reactive} from 'vue'
                 feed,
                 player,
                 status,
+                onSlideChange,
                 onStartFeedClicked,
                 refresh
             }

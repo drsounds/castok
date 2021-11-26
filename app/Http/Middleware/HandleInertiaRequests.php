@@ -38,12 +38,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-        $spotifyAccessToken = null;
-        if ($user != null) {
-            $spotifyAccessToken = Socialite::driver('zoho')->user();
-        }
         return array_merge(parent::share($request), [
-           'spotifyAccessToken' => $spotifyAccessToken
         ]);
     }
 }

@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/feed', 'App\\Http\\Controllers\\API\\FeedController@index');
+Route::get('/feed', 'App\\Http\\Controllers\\API\\FeedController@index');

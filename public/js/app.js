@@ -20659,6 +20659,9 @@ __webpack_require__.r(__webpack_exports__);
     SwiperSlide: swiper_vue__WEBPACK_IMPORTED_MODULE_0__.SwiperSlide
   },
   props: {
+    spotifyAccessToken: {
+      type: String
+    },
     spotifyDeviceId: {
       type: String
     }
@@ -20666,18 +20669,27 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup(props, _ref) {
     var emit = _ref.emit;
     var feed = (0,vue__WEBPACK_IMPORTED_MODULE_6__.reactive)([]);
-    var status = ref(0);
-    var spotifyDeviceId = ref(null);
-    var player = ref(null);
+    var status = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(0);
+    var spotifyDeviceId = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
+    var player = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
 
-    window.cb = function () {
-      status.value = 9;
-      window.player.value.addListener('ready', function (_ref2) {
+    var cb = function cb() {};
+
+    window.onSpotifyWebPlaybackSDKReady = function () {
+      window.player = new Spotify.Player({
+        name: 'Castok',
+        getOAuthToken: function getOAuthToken(cb) {
+          cb(props.spotifyAccessToken);
+        },
+        volume: 0.5
+      });
+      window.player.addListener('ready', function (_ref2) {
         var device_id = _ref2.device_id;
-        props.deviceId = device_id;
+        spotifyDeviceId.value = device_id;
+        status.value = 9;
       }); // Not Ready
 
-      window.player.value.addListener('not_ready', function (_ref3) {
+      window.player.addListener('not_ready', function (_ref3) {
         var device_id = _ref3.device_id;
         console.log('Device ID has gone offline', device_id);
       });
@@ -20712,6 +20724,7 @@ __webpack_require__.r(__webpack_exports__);
       feed: feed,
       player: player,
       status: status,
+      onSlideChange: onSlideChange,
       onStartFeedClicked: onStartFeedClicked,
       refresh: refresh
     };
@@ -24955,7 +24968,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["onSwiper", "onSlideChange"])) : _ctx.status === 100 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, _hoisted_7)) : _ctx.status === 10 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  , ["onSwiper", "onSlideChange"])) : _ctx.status === 100 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, _hoisted_7)) : _ctx.status === 9 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function () {
       return _ctx.onStartFeedClicked && _ctx.onStartFeedClicked.apply(_ctx, arguments);
     })

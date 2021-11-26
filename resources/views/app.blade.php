@@ -16,17 +16,7 @@
         @routes
         <script src="{{ mix('js/app.js') }}" defer></script>
         <script>
-            window.cb = (token) => {};
-            window.onSpotifyWebPlaybackSDKReady = () => {
 
-                window.player = new Spotify.Player({
-                    name: 'Castok',
-                    getOAuthToken: cb => {
-                        window.cb(token);
-                    },
-                    volume: 0.5
-                });
-            }
 
         </script>
     </head>
