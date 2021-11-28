@@ -24896,20 +24896,15 @@ var _hoisted_4 = {
     justifyContent: 'flex-end'
   }
 };
-var _hoisted_5 = {
-  style: {
-    "background": "white",
-    "padding": "3pt",
-    "color": "black"
-  }
-};
-var _hoisted_6 = {
+var _hoisted_5 = ["href"];
+var _hoisted_6 = ["href"];
+var _hoisted_7 = {
   style: {
     "{opacity": "0.5}"
   }
 };
-var _hoisted_7 = ["href"];
-var _hoisted_8 = {
+var _hoisted_8 = ["href"];
+var _hoisted_9 = {
   style: (_style = {
     display: 'flex',
     alignItems: 'center',
@@ -24918,12 +24913,12 @@ var _hoisted_8 = {
     flex: '0 0 64pt'
   }, _defineProperty(_style, "padding", 20), _defineProperty(_style, "flexDirection", 'column'), _defineProperty(_style, "justifyContent", 'flex-end'), _style)
 };
-var _hoisted_9 = ["href"];
-var _hoisted_10 = ["src"];
-var _hoisted_11 = ["onClick"];
+var _hoisted_10 = ["href"];
+var _hoisted_11 = ["src"];
 var _hoisted_12 = ["onClick"];
+var _hoisted_13 = ["onClick"];
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   style: {
     "height": "30pt"
   }
@@ -24931,7 +24926,7 @@ var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_14 = {
+var _hoisted_15 = {
   style: {
     display: 'flex',
     flexDirection: 'row',
@@ -24940,7 +24935,7 @@ var _hoisted_14 = {
     flex: '0 0 50pt'
   }
 };
-var _hoisted_15 = {
+var _hoisted_16 = {
   style: {
     color: 'white',
     flex: 1,
@@ -24950,12 +24945,12 @@ var _hoisted_15 = {
     justifyContent: 'flex-end'
   }
 };
-var _hoisted_16 = {
+var _hoisted_17 = {
   style: {
     "{opacity": "0.5}"
   }
 };
-var _hoisted_17 = {
+var _hoisted_18 = {
   style: (_style2 = {
     display: 'flex',
     alignItems: 'center',
@@ -24964,9 +24959,9 @@ var _hoisted_17 = {
     flex: '0 0 64pt'
   }, _defineProperty(_style2, "padding", 20), _defineProperty(_style2, "flexDirection", 'column'), _defineProperty(_style2, "justifyContent", 'flex-end'), _style2)
 };
-var _hoisted_18 = ["href"];
-var _hoisted_19 = ["src"];
-var _hoisted_20 = {
+var _hoisted_19 = ["href"];
+var _hoisted_20 = ["src"];
+var _hoisted_21 = {
   key: 1,
   style: {
     "flex": "1",
@@ -24977,11 +24972,11 @@ var _hoisted_20 = {
   }
 };
 
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", null, "Loading feed for you. Please wait", -1
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", null, "Loading feed for you. Please wait", -1
 /* HOISTED */
 );
 
-var _hoisted_22 = {
+var _hoisted_23 = {
   key: 2,
   style: {
     "flex": "1",
@@ -24990,16 +24985,16 @@ var _hoisted_22 = {
     "justify-content": "center"
   }
 };
-var _hoisted_23 = {
+var _hoisted_24 = {
   key: 3
 };
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Loading Spotify Web Player", -1
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Loading Spotify Web Player", -1
 /* HOISTED */
 );
 
-var _hoisted_25 = [_hoisted_24];
-var _hoisted_26 = {
+var _hoisted_26 = [_hoisted_25];
+var _hoisted_27 = {
   loop: "",
   ref: "audio"
 };
@@ -25051,19 +25046,34 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               })
             }, null, 4
             /* STYLE */
-            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.show.name), 1
+            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+              target: "__blank",
+              href: "https://open.spotify.com/show/".concat(object.show.id),
+              style: {
+                "font-size": "10pt",
+                "padding": "1pt 3pt",
+                "border-radius": "28pt",
+                "color": "white",
+                "font-weight": "bold"
+              }
+            }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.show.name), 9
+            /* TEXT, PROPS */
+            , _hoisted_5), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+              href: "https://open.spotify.com/episode/".concat(object.id),
+              target: "__blank"
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.name) + " ", 1
             /* TEXT */
-            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.name) + " ", 1
+            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.published), 1
             /* TEXT */
-            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.published), 1
-            /* TEXT */
-            )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+            )], 8
+            /* PROPS */
+            , _hoisted_6), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
               href: "https://open.spotify.com/episode/".concat(object.id),
               target: "__blank",
               "class": "btn btn-primary"
             }, "Stream on Spotify", 8
             /* PROPS */
-            , _hoisted_7)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+            , _hoisted_8)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
               href: "https://open.spotify.com/show/".concat(object.show.id),
               target: "__blank"
             }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
@@ -25074,9 +25084,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               }
             }, null, 8
             /* PROPS */
-            , _hoisted_10)], 8
+            , _hoisted_11)], 8
             /* PROPS */
-            , _hoisted_9), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+            , _hoisted_10), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
               "class": "ph-heart",
               onClick: function onClick($event) {
                 return _ctx.toggleLike(object);
@@ -25086,7 +25096,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               }
             }, null, 8
             /* PROPS */
-            , _hoisted_11), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+            , _hoisted_12), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
               "class": "ph-share",
               onClick: function onClick($event) {
                 return _ctx.share(object);
@@ -25096,11 +25106,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               }
             }, null, 8
             /* PROPS */
-            , _hoisted_12), _hoisted_13])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Sound by " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.show.name.substr(0, 100)) + " ", 1
+            , _hoisted_13), _hoisted_14])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Sound by " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.show.name.substr(0, 100)) + " ", 1
             /* TEXT */
-            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.published), 1
+            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.published), 1
             /* TEXT */
-            )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+            )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
               href: "https://open.spotify.com/episode/".concat(object.id),
               target: "__blank",
               style: {
@@ -25115,9 +25125,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               }
             }, null, 8
             /* PROPS */
-            , _hoisted_19)], 8
+            , _hoisted_20)], 8
             /* PROPS */
-            , _hoisted_18)])])])];
+            , _hoisted_19)])])])];
           }),
           _: 2
           /* DYNAMIC */
@@ -25134,14 +25144,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["onSwiper", "onSlideChange"])) : _ctx.status === 100 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ClipLoader, {
+  , ["onSwiper", "onSlideChange"])) : _ctx.status === 100 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ClipLoader, {
     color: "white"
-  }), _hoisted_21])) : _ctx.status === 9 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }), _hoisted_22])) : _ctx.status === 9 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-primary",
     onClick: _cache[0] || (_cache[0] = function () {
       return _ctx.onStartFeedClicked && _ctx.onStartFeedClicked.apply(_ctx, arguments);
     })
-  }, "Start feed")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_23, _hoisted_25)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("audio", _hoisted_26, null, 512
+  }, "Start feed")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_24, _hoisted_26)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("audio", _hoisted_27, null, 512
   /* NEED_PATCH */
   )]);
 }
