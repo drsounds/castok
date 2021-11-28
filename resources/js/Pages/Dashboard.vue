@@ -47,13 +47,14 @@
                   flex: '1'
                 }"
               >
-                <div :style="{color: 'white', flex: 1, display: 'flex', padding: '20pt', flexDirection: 'column', justifyContent: 'flex-end'}">
+                <div :style="{color: 'white', flex: 1, display: 'flex', borderRadius: '20pt', padding: '5pt 20pt', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-end'}">
+                    <div style="background: white; padding: 3pt; color: black;">{{object.show.name}}</div>
                     <p>{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
 
                 </div>
                 <div :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
-                   <a :href="object.url">
-                    <img :src="object.images[0].url" style="width: 34pt; border-radius: 100%">
+                   <a :href="`https://open.spotify.com/show/${object.show.id}`" target="__blank">
+                    <img :src="object.show.images[0].url" style="width: 34pt; border-radius: 100%">
                   </a>
                   <button class="ph-heart" @click="toggleLike(object)" style="font-size: 30pt" />
                   <button class="ph-share" @click="share(object)" style="font-size: 30pt" />
@@ -74,7 +75,7 @@
                   <p>Sound by {{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
                 </div>  
                 <div :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
-                  <a :href="object.url" style="padding: 20pt">
+                  <a :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" style="padding: 20pt">
                     <img class="spinning" :src="object.images[0].url" style="width: 34pt; border-radius: 100%">
                   </a>
                 </div>
@@ -98,8 +99,7 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue';
-
+import { Swiper, SwiperSlide } from 'swiper/vue'; 
 import { getPodcastFeed } from "../actions/feed";
 import { toggleLikeEpisode } from '../actions/spotify';
 import 'swiper/css';
@@ -114,7 +114,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
     export default defineComponent({
 
         components: {
-            AppLayout,
+            AppLayout, 
             ClipLoader,
             Welcome,
             Swiper,

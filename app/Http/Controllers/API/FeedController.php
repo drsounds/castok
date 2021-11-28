@@ -19,7 +19,9 @@ class FeedController extends Controller {
             $api->setAccessToken($spotifyUser['token']);
         }
         $result = ['objects' => []];
-        $savedShows = $api->getMySavedShows()->items;
+        $savedShows = $api->getMySavedShows([
+          'limit' => 50
+        ])->items;
         shuffle($savedShows);
         for($i = 0; $i < count($savedShows) && $i < 20; $i++) {
             $show = $savedShows[array_rand($savedShows)];
@@ -28,9 +30,11 @@ class FeedController extends Controller {
             if (count($episodes) > 0) {
                 $episode = $episodes[array_rand($episodes)];
                 $episode->isLiked = $api->myEpisodesContains([$episode->id]);
+                $episode->show = $show->show;
                 $result['objects'][] = $episode;
             }
         }
+        shuffle($result['objects']);
         return response()->json($result);
     }
 }
