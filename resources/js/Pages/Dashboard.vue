@@ -50,7 +50,7 @@
                 <div :style="{color: 'white', flex: 1, display: 'flex', borderRadius: '20pt', padding: '5pt 20pt', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-end'}">
                     <div style="background: white; padding: 3pt; color: black;">{{object.show.name}}</div>
                     <p>{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
-
+                    <a :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" class="btn btn-primary">Stream on Spotify</a>
                 </div>
                 <div :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
                    <a :href="`https://open.spotify.com/show/${object.show.id}`" target="__blank">
