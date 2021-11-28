@@ -18,6 +18,15 @@
 
 
         </script>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8BMEHD8GVH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){window.dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
     <script src="https://unpkg.com/phosphor-icons"></script>
     </head>
     <body class="font-sans antialiased">
