@@ -72,7 +72,7 @@
                 }"
               >
                 <div :style="{color: 'white', flex: 1, display: 'flex', padding: '20pt', flexDirection: 'column', justifyContent: 'flex-end'}">
-                  <p>Sound by {{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
+                  <p>Sound by {{object.show.name.substr(0, 100)}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
                 </div>  
                 <div :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
                   <a :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" style="padding: 20pt">
