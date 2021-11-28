@@ -27,6 +27,7 @@ class FeedController extends Controller {
             shuffle($episodes);
             if (count($episodes) > 0) {
                 $episode = $episodes[array_rand($episodes)];
+                $episode->isLiked = $api->myEpisodesContains([$episode->id]);
                 $result['objects'][] = $episode;
             }
         }

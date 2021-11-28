@@ -10,3 +10,11 @@ export async function playSpotifyTrack(uris, deviceId, token) {
     }, {uris});
     return result;
 }
+
+export async function toggleLikeEpisode(uris) {
+
+    let response = await axios.put('/api/library/episodes', {
+      uris
+    })
+    return response.data;
+}

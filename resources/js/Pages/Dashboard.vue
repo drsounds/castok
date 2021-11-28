@@ -72,9 +72,9 @@
               >
                 <div :style="{color: 'white', flex: 1, display: 'flex', padding: '20pt', flexDirection: 'column', justifyContent: 'flex-end'}">
                   <p>Sound by {{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
-                </div>
+                </div>  
                 <div :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
-                  <a :href="object.url">
+                  <a :href="object.url" style="padding: 20pt">
                     <img class="spinning" :src="object.images[0].url" style="width: 34pt; border-radius: 100%">
                   </a>
                 </div>
@@ -92,7 +92,7 @@
         <div v-else>
             <p>Loading Spotify Web Player</p>
         </div>
-        <audio ref="audio" />
+        <audio loop ref="audio" />
     </div>
 
 </template>
@@ -101,7 +101,7 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 
 import { getPodcastFeed } from "../actions/feed";
-
+import { toggleLikeEpisode } from '../actions/spotify';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -133,12 +133,14 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
             const status = ref(9);
             const spotifyDeviceId = ref(null);
             const player = ref(null);
-            const audio = ref(null);
+            const audio = ref(null); 
+            const isLiked = ref(false);
 
  
             const onSlideChange = (swiper) => {
                 const index = swiper.activeIndex;
                 const episode = feed.value[index];
+                isLiked.value = feed.value[index].isLiked;
                 if (episode) {
                     play(episode.audio_preview_url);
                 }
@@ -159,6 +161,12 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
                    }
                 });
             }
+            const toggleLike = (e) => {
+              toggleLikeEpisode([e.uri]).then((result) => {
+                feed.value[index].isLiked = result.isLiked
+                isLiked.value = result.isLiked
+              })
+            }
             const onStartFeedClicked = () => {
                 refresh();
             }
@@ -169,7 +177,9 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
                 onSlideChange,
                 onStartFeedClicked,
                 refresh,
-                audio
+                audio,
+                isLiked,
+                toggleLike
             }
         }
     })

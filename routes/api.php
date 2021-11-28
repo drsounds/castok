@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/feed', 'App\\Http\\Controllers\\API\\FeedController@index');
+Route::put('/library/episodes', 'App\\Http\\Controllers\\API\\LikeController@create');

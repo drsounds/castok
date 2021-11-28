@@ -20635,14 +20635,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var swiper_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! swiper/vue */ "./node_modules/swiper/vue/swiper-vue.js");
 /* harmony import */ var _actions_feed__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/feed */ "./resources/js/actions/feed.js");
-/* harmony import */ var swiper_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! swiper/css */ "./node_modules/swiper/swiper.min.css");
-/* harmony import */ var swiper_css_navigation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! swiper/css/navigation */ "./node_modules/swiper/modules/navigation/navigation.min.css");
-/* harmony import */ var swiper_css_pagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! swiper/css/pagination */ "./node_modules/swiper/modules/pagination/pagination.min.css");
-/* harmony import */ var swiper_css_scrollbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! swiper/css/scrollbar */ "./node_modules/swiper/modules/scrollbar/scrollbar.min.css");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Layouts/AppLayout.vue */ "./resources/js/Layouts/AppLayout.vue");
-/* harmony import */ var _Jetstream_Welcome_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Jetstream/Welcome.vue */ "./resources/js/Jetstream/Welcome.vue");
-/* harmony import */ var vue_spinner_src_ClipLoader_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue-spinner/src/ClipLoader.vue */ "./node_modules/vue-spinner/src/ClipLoader.vue");
+/* harmony import */ var _actions_spotify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/spotify */ "./resources/js/actions/spotify.js");
+/* harmony import */ var swiper_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! swiper/css */ "./node_modules/swiper/swiper.min.css");
+/* harmony import */ var swiper_css_navigation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! swiper/css/navigation */ "./node_modules/swiper/modules/navigation/navigation.min.css");
+/* harmony import */ var swiper_css_pagination__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! swiper/css/pagination */ "./node_modules/swiper/modules/pagination/pagination.min.css");
+/* harmony import */ var swiper_css_scrollbar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! swiper/css/scrollbar */ "./node_modules/swiper/modules/scrollbar/scrollbar.min.css");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Layouts/AppLayout.vue */ "./resources/js/Layouts/AppLayout.vue");
+/* harmony import */ var _Jetstream_Welcome_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Jetstream/Welcome.vue */ "./resources/js/Jetstream/Welcome.vue");
+/* harmony import */ var vue_spinner_src_ClipLoader_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-spinner/src/ClipLoader.vue */ "./node_modules/vue-spinner/src/ClipLoader.vue");
 
 
 
@@ -20653,11 +20654,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_6__.defineComponent)({
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_7__.defineComponent)({
   components: {
-    AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-    ClipLoader: vue_spinner_src_ClipLoader_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    Welcome: _Jetstream_Welcome_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    ClipLoader: vue_spinner_src_ClipLoader_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    Welcome: _Jetstream_Welcome_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
     Swiper: swiper_vue__WEBPACK_IMPORTED_MODULE_0__.Swiper,
     SwiperSlide: swiper_vue__WEBPACK_IMPORTED_MODULE_0__.SwiperSlide
   },
@@ -20671,15 +20673,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   setup: function setup(props, _ref) {
     var emit = _ref.emit;
-    var feed = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)([]);
-    var status = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(9);
-    var spotifyDeviceId = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
-    var player = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
-    var audio = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(null);
+    var feed = (0,vue__WEBPACK_IMPORTED_MODULE_7__.ref)([]);
+    var status = (0,vue__WEBPACK_IMPORTED_MODULE_7__.ref)(9);
+    var spotifyDeviceId = (0,vue__WEBPACK_IMPORTED_MODULE_7__.ref)(null);
+    var player = (0,vue__WEBPACK_IMPORTED_MODULE_7__.ref)(null);
+    var audio = (0,vue__WEBPACK_IMPORTED_MODULE_7__.ref)(null);
+    var isLiked = (0,vue__WEBPACK_IMPORTED_MODULE_7__.ref)(false);
 
     var onSlideChange = function onSlideChange(swiper) {
       var index = swiper.activeIndex;
       var episode = feed.value[index];
+      isLiked.value = feed.value[index].isLiked;
 
       if (episode) {
         play(episode.audio_preview_url);
@@ -20704,6 +20708,13 @@ __webpack_require__.r(__webpack_exports__);
       });
     };
 
+    var toggleLike = function toggleLike(e) {
+      (0,_actions_spotify__WEBPACK_IMPORTED_MODULE_2__.toggleLikeEpisode)([e.uri]).then(function (result) {
+        feed.value[index].isLiked = result.isLiked;
+        isLiked.value = result.isLiked;
+      });
+    };
+
     var onStartFeedClicked = function onStartFeedClicked() {
       refresh();
     };
@@ -20715,7 +20726,9 @@ __webpack_require__.r(__webpack_exports__);
       onSlideChange: onSlideChange,
       onStartFeedClicked: onStartFeedClicked,
       refresh: refresh,
-      audio: audio
+      audio: audio,
+      isLiked: isLiked,
+      toggleLike: toggleLike
     };
   }
 }));
@@ -24977,6 +24990,7 @@ var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 
 var _hoisted_23 = [_hoisted_22];
 var _hoisted_24 = {
+  loop: "",
   ref: "audio"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -25068,7 +25082,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.published), 1
             /* TEXT */
             )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-              href: object.url
+              href: object.url,
+              style: {
+                "padding": "20pt"
+              }
             }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
               "class": "spinning",
               src: object.images[0].url,
@@ -27429,6 +27446,93 @@ function _getPodcastFeed() {
     }, _callee, null, [[0, 11]]);
   }));
   return _getPodcastFeed.apply(this, arguments);
+}
+
+/***/ }),
+
+/***/ "./resources/js/actions/spotify.js":
+/*!*****************************************!*\
+  !*** ./resources/js/actions/spotify.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "playSpotifyTrack": () => (/* binding */ playSpotifyTrack),
+/* harmony export */   "toggleLikeEpisode": () => (/* binding */ toggleLikeEpisode)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+function playSpotifyTrack(_x, _x2, _x3) {
+  return _playSpotifyTrack.apply(this, arguments);
+}
+
+function _playSpotifyTrack() {
+  _playSpotifyTrack = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(uris, deviceId, token) {
+    var result;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            result = axios__WEBPACK_IMPORTED_MODULE_1___default().request({
+              url: 'https://api.spotify.com/v1/me/player/play?device_id=' + deviceId,
+              headers: {
+                'Authorization': 'Bearer ' + token
+              },
+              method: 'PUT'
+            }, {
+              uris: uris
+            });
+            return _context.abrupt("return", result);
+
+          case 2:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _playSpotifyTrack.apply(this, arguments);
+}
+
+function toggleLikeEpisode(_x4) {
+  return _toggleLikeEpisode.apply(this, arguments);
+}
+
+function _toggleLikeEpisode() {
+  _toggleLikeEpisode = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(uris) {
+    var response;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return axios__WEBPACK_IMPORTED_MODULE_1___default().put('/api/library/episodes', {
+              uris: uris
+            });
+
+          case 2:
+            response = _context2.sent;
+            return _context2.abrupt("return", response.data);
+
+          case 4:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _toggleLikeEpisode.apply(this, arguments);
 }
 
 /***/ }),
