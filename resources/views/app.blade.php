@@ -18,6 +18,7 @@
 
 
         </script>
+    <script src="https://unpkg.com/phosphor-icons"></script>
     </head>
     <body class="font-sans antialiased">
         @inertia

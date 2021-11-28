@@ -9,27 +9,78 @@
             @swiper="onSwiper"
             @slideChange="onSlideChange"
         >
-            <swiper-slide
-                v-for="object in feed" :key="object.id"
-                :style="{
-                    backgroundImage: 'url(' + object.images[0].url + ')',
-                    backgroundSize: 'cover',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'stretch',
-                    justifyContent: 'stretch'
-                }"
-                @slidechange="onSlideChange"
+          <swiper-slide
+              v-for="object in feed" :key="object.id"
+              :style="{position: 'relative', height: '100%'}"
+              @slidechange="onSlideChange"
+          >
+            <div :style="{
+              backgroundImage: 'url(' + object.images[0].url + ')',
+              backgroundSize: 'cover',
+              position: 'absolute',
+              opacity: 0.5,
+              left: 0,
+              top: 0,
+              width: '100%',
+              height: '100%'
+            }">
+            </div>
+            <div
+              :style="{
+             
+                  position: 'absolute', 
+                  left: 0,
+                  top: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundSize: 'cover',
+                  display: 'flex',
+                  flexDirection: 'column',
+              }"
             >
-                <div :style="{color: 'white', display: 'flex', padding: '20pt', flexDirection: 'column', justifyContent: 'flex-end'}">
+              <div 
+                :style="{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'stretch',
+                  justifyContent: 'stretch',
+                  flex: '1'
+                }"
+              >
+                <div :style="{color: 'white', flex: 1, display: 'flex', padding: '20pt', flexDirection: 'column', justifyContent: 'flex-end'}">
                     <p>{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
 
                 </div>
-                <div :style="{display: 'flex', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
-                
+                <div :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
+                   <a :href="object.url">
+                    <img :src="object.images[0].url" style="width: 34pt; border-radius: 100%">
+                  </a>
+                  <button class="ph-heart" @click="toggleLike(object)" style="font-size: 30pt" />
+                  <button class="ph-share" @click="share(object)" style="font-size: 30pt" />
+                  <div style="height: 30pt"></div>
+                  
                 </div>
-
-            </swiper-slide>
+              </div>
+              <div 
+                :style="{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'stretch',
+                  justifyContent: 'stretch',
+                  flex: '0 0 50pt'
+                }"
+              >
+                <div :style="{color: 'white', flex: 1, display: 'flex', padding: '20pt', flexDirection: 'column', justifyContent: 'flex-end'}">
+                  <p>Sound by {{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
+                </div>
+                <div :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
+                  <a :href="object.url">
+                    <img class="spinning" :src="object.images[0].url" style="width: 34pt; border-radius: 100%">
+                  </a>
+                </div>
+              </div>
+            </div> 
+          </swiper-slide>
         </swiper>
         <div  v-else-if="status === 100" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center">
             <ClipLoader color="white" />
