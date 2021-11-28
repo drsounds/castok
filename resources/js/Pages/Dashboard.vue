@@ -149,7 +149,6 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
                 audio.value.autoPlay = true;
                 audio.value.src = url;  
                 audio.value.play()
-                
             }
             const refresh = () => {
               status.value = 100;
