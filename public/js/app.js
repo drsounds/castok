@@ -24986,8 +24986,6 @@ var _hoisted_23 = {
   ref: "audio"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_av_media = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("av-media");
-
   var _component_swiper_slide = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("swiper-slide");
 
   var _component_swiper = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("swiper");
@@ -25085,15 +25083,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
               src: object.images[0].url,
               style: {
-                width: '33%'
+                "{maxWidth": "'50%'}"
               }
             }, null, 8
             /* PROPS */
-            , _hoisted_2), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_av_media, {
-              media: _ctx.media
-            }, null, 8
-            /* PROPS */
-            , ["media"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+            , _hoisted_2), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
               target: "__blank",
               href: "https://open.spotify.com/show/".concat(object.show.id),
               style: {
@@ -27469,7 +27463,7 @@ var _hoisted_1 = {
   }
 };
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div style=\"flex:1;\" data-v-317d1a6e></div><h1 style=\"font-size:5rem;\" data-v-317d1a6e>SWIPECAST</h1><div style=\"flex:1;\" data-v-317d1a6e></div><h1 data-v-317d1a6e>This app lets you discover podcasts on Spotify in a TikTok style</h1><br data-v-317d1a6e><a class=\"btn btn-spotify\" href=\"/auth/spotify/redirect\" data-v-317d1a6e>Log in with Spotify</a><div style=\"flex:1;\" data-v-317d1a6e></div><div data-v-317d1a6e>Made with ♥ by <a href=\"https://github.com/drsounds\" data-v-317d1a6e>@drsounds</a> from Lidköping, Sweden. </div>", 8);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div style=\"flex:1;\" data-v-317d1a6e></div><h1 style=\"font-size:5rem;\" data-v-317d1a6e>SWIPECAST</h1><div style=\"flex:1;\" data-v-317d1a6e></div><h1 data-v-317d1a6e>This app lets you discover podcasts on Spotify in a TikTok style</h1><br data-v-317d1a6e><a class=\"btn btn-spotify\" href=\"/auth/spotify/redirect\" data-v-317d1a6e>Log in with Spotify</a><div style=\"flex:1;\" data-v-317d1a6e></div><div data-v-317d1a6e>Made with ♥ by <a href=\"https://github.com/drsounds\" data-v-317d1a6e>@drsounds</a> from Lidköping, Sweden. <a href=\"https://github.com/drsounds/castok\" data-v-317d1a6e>Source code on GitHub</a></div>", 8);
 
 var _hoisted_10 = [_hoisted_2];
 function render(_ctx, _cache, $props, $setup, $data, $options) {

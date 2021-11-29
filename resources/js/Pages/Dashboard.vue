@@ -56,10 +56,7 @@
               >
                 <div
                     @click="togglePlayPause" :style="{color: 'white', flex: 1, display: 'flex', borderRadius: '20pt', padding: '5pt 20pt', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-end'}">
-                    <img :src="object.images[0].url" :style="{width: '33%'}" />
-                    <div>
-                        <av-media :media="media" />
-                    </div>
+                    <img :src="object.images[0].url" style="{maxWidth: '50%'}" />
                     <a target="__blank" :href="`https://open.spotify.com/show/${object.show.id}`" style="font-size: 10pt; padding: 1pt 3pt; border-radius: 28pt; color: white; font-weight: bold">{{object.show.name}}</a>
                     <a :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" >{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></a><br>
                     <a  :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" class="btn btn-primary">Stream full episode on on Spotify</a>

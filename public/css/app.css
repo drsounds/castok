@@ -1289,6 +1289,9 @@ select {
 .max-w-6xl {
 	max-width: 72rem;
 }
+.max-w-2xl {
+	max-width: 42rem;
+}
 .flex-1 {
 	flex: 1 1 0%;
 }
@@ -2277,6 +2280,10 @@ body {
 
 	.md\:grid {
 		display: grid;
+	}
+
+	.md\:w-1 {
+		width: 0.25rem;
 	}
 
 	.md\:grid-cols-3 {
