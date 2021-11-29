@@ -6,7 +6,7 @@
     <h1>This app lets you discover podcasts on Spotify in a TikTok style</h1><br />
     <a class="btn btn-spotify" href="/auth/spotify/redirect">Log in with Spotify</a>
     <div style="flex: 1"></div>
-    <div>Made with ♥ by <a href="https://github.com/drsounds">@drsounds</a> from Lidköping, Sweden. <a href="https://github.com/drsounds/castok">Source code on GitHub</a></a> </div>
+    <div>Made with ♥ by <a href="https://github.com/drsounds">@drsounds</a> from Lidköping, Sweden. <a href="https://github.com/drsounds/castok">Source code on GitHub</a></div>
   </div>
 
 
