@@ -42,13 +42,8 @@ class FeedController extends Controller {
             shuffle($episodes);
             if (count($episodes) > 0) {
                 $episode = $episodes[array_rand($episodes)];
-                $episode->isLiked = $api->myEpisodesContains([$episode->id]);
-                if ($episode->isLiked) {
-                  continue;
-                }
-                if ($episode->resume_point->resume_position_ms > 0) {
-                  continue;
-                }
+                $episode->isLiked = false; //$api->myEpisodesContains([$episode->id]);
+               
                 $episode->show = $show->show;
                 $episode->show->url = $episode->show->external_urls->spotify;
                 $episode->url = $episode->external_urls->spotify;
@@ -60,18 +55,12 @@ class FeedController extends Controller {
         $offset += 10;
         break;
       } while ($savedShows > 0); 
-        for ($i = 0; $i < 3; $i++) {  
+        for ($i = 0; $i < 3 && $i < count($keywords); $i++) {  
           $keyword = $keywords[array_rand($keywords)];
           $relatedEpisodes = $api->search($keyword, 'episode')->episodes->items;
           for ($i = 0; $i < 5 && $i < count($relatedEpisodes); $i++) {
             $episode =  $relatedEpisodes[$i]; 
-            $episode->isLiked = $api->myEpisodesContains([$episode->id]);
-            if ($episode->isLiked) {
-              continue;
-            }
-            if ($episode->resume_point->resume_position_ms >0) {
-              continue;
-            }
+            $episode->isLiked = false; //$api->myEpisodesContains([$episode->id]);
             $episode->url = $episode->external_urls->spotify;
             $episode->show = (Object)[
               'name' => $episode->name,
