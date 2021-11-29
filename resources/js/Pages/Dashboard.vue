@@ -19,6 +19,7 @@
             <div
                 @click="togglePlayPause"
                 :style="{
+                  maskImage: 'linear-gradient(-180deg, black, transparent)',
                   backgroundImage: 'url(' + object.images[0].url + ')',
                   backgroundSize: 'cover',
                   position: 'absolute',
@@ -55,16 +56,20 @@
               >
                 <div
                     @click="togglePlayPause" :style="{color: 'white', flex: 1, display: 'flex', borderRadius: '20pt', padding: '5pt 20pt', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-end'}">
-                    <a target="__blank" :href="`https://open.spotify.com/show/${object.show.id}`" style="font-size: 10pt; padding: 1pt 3pt; border-radius: 28pt; color: white; font-weight: bold">{{object.show.name}}</a>
+                    <img :src="object.images[0].url" :style="{width: '100%'}" />
+                    <div>
+                        <av-media :media="media" />
+                    </div>
+                    <a target="__blank" :href="`https://open.spotify.com/show/${object.show.id}`" style="font-size: 10pt; padding: 1pt 3pt; border-radius: 28pt; color: white; font-weight: bold">{{object.show.name}}</a><br>
                     <a :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" >{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></a>
-                    <a  :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" class="btn btn-primary">Stream on Spotify</a>
+                    <a  :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" class="btn btn-primary">Stream full episode on on Spotify</a>
                 </div>
                 <div
                     @click="togglePlayPause" :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
                    <a :href="`https://open.spotify.com/show/${object.show.id}`" target="__blank">
                     <img :src="object.show.images[0].url" style="width: 34pt; border-radius: 100%">
                   </a>
-                  <button class="ph-heart" @click="toggleLike(object)" style="font-size: 30pt" />
+                  <button :style="{color: isLiked ? 'red' : 'white'}" :class="'ph-heart' + (isLiked ? '-fill' : '')" @click="toggleLike($event, object)" style="font-size: 30pt" />
                   <button class="ph-share" @click="share(object)" style="font-size: 30pt" />
                   <div style="height: 30pt"></div>
 
@@ -146,14 +151,38 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
             const audio = ref(null);
             const isLiked = ref(false);
 
+            const selectedIndex = ref(0);
+            const media = ref(null);
+            const constraints = { audio: true, video: false }
 
             const onSlideChange = (swiper) => {
                 const index = swiper.activeIndex;
+                selectedIndex.value = swiper.activeIndex;
                 const episode = feed.value[index];
                 isLiked.value = feed.value[index].isLiked;
                 if (episode) {
                     play(episode.audio_preview_url);
                 }
+            }
+            const share = (obj) => {
+                const link = `https://open.spotify.com/episode/${obj.id}?utm_source=swipecast`
+                if (window.navigator.webkitstartactivity instanceof Function) {
+                    var params = {
+                        'action': 'http://webintents.org/share',
+                        'type': 'text/uri-list',
+                        'data': link
+                    };
+                    // create the intent
+                    var intent = new webkitintent(params);
+
+                    // start the intent, and pass in the callback
+                    // that is called on succes.
+                    window.navigator.webkitstartactivity(intent, function (data) {
+                    });
+                } else {
+                    window.open('https://www.facebook.com/dialog/share?app_id=2711586715813922&display=popup&href=' + encodeURIComponent(link))
+                }
+
             }
             const togglePlayPause = () => {
                 if (audio.value.paused) {
@@ -166,6 +195,8 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
                 audio.value.autoPlay = true;
                 audio.value.src = url;
                 audio.value.play()
+                media.value = audio.value.srcObject
+
             }
             const refresh = () => {
               status.value = 100;
@@ -177,9 +208,11 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
                    }
                 });
             }
-            const toggleLike = (e) => {
+            const toggleLike = ($event, e) => {
+                $event.stopPropagation();
+                togglePlayPause()
               toggleLikeEpisode([e.uri]).then((result) => {
-                feed.value[index].isLiked = result.isLiked
+                feed.value[selectedIndex.value].isLiked = result.isLiked
                 isLiked.value = result.isLiked
               })
             }
@@ -189,6 +222,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
             return {
                 feed,
                 player,
+                share,
                 status,
                 togglePlayPause,
                 onSlideChange,
@@ -196,6 +230,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
                 refresh,
                 audio,
                 isLiked,
+                media,
                 toggleLike
             }
         }

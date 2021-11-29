@@ -12,7 +12,7 @@ use Laravel\Socialite\Facades\Socialite;
 class LikeController extends Controller {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     public function create(Request $request) {
- 
+
       $api = new \SpotifyWebAPI\SpotifyWebAPI();
       $spotifyUser = Session::get('spotifyUser');
       if ($spotifyUser != null) {
@@ -20,7 +20,7 @@ class LikeController extends Controller {
       }
       $isLiked = false;
       $episodes = $request->input('uris');
-      if ($api->myEpisodesContains($episodes)) {
+      if ($api->myEpisodesContains($episodes)[0]) {
         $api->deleteMyEpisodes($episodes);
       } else {
         $api->addMyEpisodes($episodes);

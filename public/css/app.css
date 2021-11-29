@@ -1861,6 +1861,9 @@ select {
 .ease-in {
 	transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
+:root {
+    --color: rgba(167, 167, 167, 1);
+}
 body {
   background: black;
   color: white;
@@ -1901,7 +1904,7 @@ body {
   -webkit-animation-iteration-count: infinite;
           animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
-          animation-timing-function: linear; 
+          animation-timing-function: linear;
 }
 .hover\:border-gray-300:hover {
 	--tw-border-opacity: 1;
@@ -2307,3 +2310,4 @@ body {
 		padding-right: 2rem;
 	}
 }
+

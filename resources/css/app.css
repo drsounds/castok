@@ -1,6 +1,9 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+:root {
+    --color: rgba(167, 167, 167, 1);
+}
 body {
   background: black;
   color: white;
@@ -29,5 +32,5 @@ body {
   animation-name: spin;
   animation-duration: 5000ms;
   animation-iteration-count: infinite;
-  animation-timing-function: linear; 
+  animation-timing-function: linear;
 }
