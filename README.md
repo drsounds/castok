@@ -6,3 +6,7 @@ feed of podcast episodes from podcasts you follow on Spotify.
 It was inspired from the leak of an upcoming music video feed feature called
 'discover'.
 
+[Demo app](https://swipecast.buddhalow.com?utm_source=github)
+
+# LICENSE
+MIT
