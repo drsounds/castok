@@ -58,7 +58,8 @@
                 <div
                     @click="togglePlayPause" :style="{color: 'white', flex: 1, display: 'flex', borderRadius: '20pt', padding: '5pt 20pt', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-end'}">
                     <img :src="object.images[0].url" style="{maxWidth: '50%'}" />
-                    <p class="uppercase">30 second preview</p>
+                    <p class="uppecase" v-if="mode === 'spotify'">Playing episode</p>
+                    <p class="uppercase" v-else>30 second preview of episode</p>
                     <a target="__blank" :href="`https://open.spotify.com/show/${object.show.id}`" style="font-size: 10pt; padding: 1pt 3pt; border-radius: 28pt; color: white; font-weight: bold">{{object.show.name}}</a>
                     <a :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" >{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></a><br>
                     <a  :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" class="btn btn-primary">View on Spotify</a>
@@ -117,7 +118,7 @@
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { getPodcastFeed } from "../actions/feed";
-import { toggleLikeEpisode } from '../actions/spotify';
+import {playSpotifyTrack, toggleLikeEpisode} from '../actions/spotify';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -137,10 +138,11 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
             SwiperSlide
         },
         props: {
-            spotifyAccessToken: {
-                type: String
+            mode: {
+                type: String,
+                default: 'spotify'
             },
-            spotifyDeviceId: {
+            spotifyAccessToken: {
                 type: String
             }
         },
@@ -157,13 +159,38 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
             const constraints = { audio: true, video: false }
             const playerState = ref('playing');
 
+            const script = document.createElement('script');
+
+            script.src = 'https://sdk.scdn.co/spotify-player.js';
+            script.type = 'text/javascript';
+            document.head.appendChild(script);
+            window.onSpotifyWebPlaybackSDKReady = () => {
+                const token = props.spotifyAccessToken
+                window.player = new Spotify.Player({
+                    name: 'Castok',
+                    getOAuthToken: cb => { cb(token); },
+                    volume: 0.5
+                });
+                window.player.addListener('ready', ({ device_id }) => {
+                    spotifyDeviceId.value = device_id
+                    status.value = 9;
+                    refresh();
+                });
+
+                // Not Ready
+                window.player.addListener('not_ready', ({ device_id }) => {
+                    window.player.addListener('not_ready', ({ device_id }) => {
+                        console.log('Device ID has gone offline', device_id);
+                    });
+                })
+            }
             const onSlideChange = (swiper) => {
                 const index = swiper.activeIndex;
                 selectedIndex.value = swiper.activeIndex;
                 const episode = feed.value[index];
                 isLiked.value = feed.value[index].isLiked;
                 if (episode) {
-                    play(episode.audio_preview_url);
+                    play(episode);
                 }
             }
             const share = (obj) => {
@@ -187,20 +214,36 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
 
             }
             const togglePlayPause = () => {
-                if (audio.value.paused) {
-                    audio.value.play()
-                    playerState.value = 'playing'
+                if (props.mode === 'spotify') {
+                    window.player.togglePlay()
+                    if (playerState.value == 'paused') {
+                        playerState.value = 'playing'
+                    } else {
+                        playerState.value = 'paused'
+                    }
                 } else {
-                    audio.value.pause()
-                    playerState.value = 'paused'
+                    if (audio.value.paused) {
+                        audio.value.play()
+                        playerState.value = 'playing'
+                    } else {
+                        audio.value.pause()
+                        playerState.value = 'paused'
+                    }
                 }
             }
-            const play = (url) => {
-                audio.value.autoPlay = true;
-                audio.value.src = url;
-                audio.value.play()
-                media.value = audio.value.srcObject
-
+            const playPreviewTrack = (url) => {
+                    audio.value.autoPlay = true;
+                    audio.value.src = url;
+                    audio.value.play()
+                    media.value = audio.value.srcObject
+            }
+            const play = (obj) => {
+                if (props.mode === 'spotify') {
+                    playSpotifyTrack([obj.uri], spotifyDeviceId.value, props.spotifyAccessToken).then(() => {
+                    })
+                } else {
+                    playPreviewTrack(obj.audio_preview_url)
+                }
             }
             const refresh = () => {
               status.value = 100;
@@ -208,7 +251,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
                    status.value = result.status
                    feed.value = result.objects
                    if (result.objects.length > 0) {
-                     play(result.objects[0].audio_preview_url);
+                     play(result.objects[0]);
                    }
                 });
             }
@@ -221,7 +264,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
               })
             }
             const onStartFeedClicked = () => {
-                refresh();
+                window.player.connect()
             }
             return {
                 feed,
