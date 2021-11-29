@@ -24,7 +24,7 @@
                   filter: 'blur(50pt)',
                   backgroundSize: 'cover',
                   position: 'absolute',
-                  opacity: 0.5,
+                  opacity: 0.8,
                   left: 0,
                   top: 0,
                   width: '100%',
