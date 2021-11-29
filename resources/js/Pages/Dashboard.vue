@@ -17,6 +17,7 @@
               @slidechange="onSlideChange"
           >
             <div
+            v-if="object && object.images instanceof Array && object.images.length > 0"
                 @click="togglePlayPause"
                 :style="{
                   maskImage: 'linear-gradient(-180deg, black, transparent)',
@@ -57,18 +58,18 @@
               >
                 <div
                     @click="togglePlayPause" :style="{color: 'white', flex: 1, display: 'flex', borderRadius: '20pt', padding: '5pt 20pt', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-end'}">
-                    <img :src="object.images[0].url" style="{maxWidth: '50%'}" />
+                    <img v-if="object && object.images instanceof Array && object.images.length > 0" :src="object.images[0].url" :style="{boxShadow: '2pt 2pt 28pt rgba(0, 0, 0, .5)', borderRadius: '3pt', maxWidth: '50%'}" />
                     <p class="uppecase" v-if="mode === 'spotify'">Playing episode</p>
                     <p class="uppercase" v-else>30 second preview of episode</p>
-                    <a target="__blank" :href="`https://open.spotify.com/show/${object.show.id}`" style="font-size: 10pt; padding: 1pt 3pt; border-radius: 28pt; color: white; font-weight: bold">{{object.show.name}}</a>
-                    <a :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" >{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></a><br>
-                    <a  :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" class="btn btn-primary">View on Spotify</a>
+                    <a target="__blank" v-if="object.show" :href="`${object.show.url}`" style="font-size: 10pt; padding: 1pt 3pt; border-radius: 28pt; color: white; font-weight: bold">{{object.show.name}}</a>
+                    <a :href="`${object.url}`" target="__blank" >{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></a><br>
+                    <a  :href="`${object.url}`" target="__blank" class="btn btn-primary">View on Spotify</a>
                 </div>
                 <div
                     @click="togglePlayPause" :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
 
-                   <a :href="`https://open.spotify.com/show/${object.show.id}`" target="__blank">
-                    <img :src="object.show.images[0].url" style="width: 34pt; border-radius: 100%">
+                   <a v-if="object.show" :href="`${object.show.url}`" target="__blank">
+                    <img v-if="object && object.images instanceof Array && object.images.length > 0" :src="object.show.images[0].url" style="width: 34pt; border-radius: 100%">
                   </a>
                     <button :class="'ph-' + (playerState === 'playing' ? 'pause' : 'play') + '-circle'" style="font-size: 30pt" />
                     <button :style="{color: isLiked ? 'red' : 'white'}" :class="'ph-heart' + (isLiked ? '-fill' : '')" @click="toggleLike($event, object)" style="font-size: 30pt" />
@@ -88,18 +89,19 @@
               >
                 <div
                     @click="togglePlayPause" :style="{color: 'white', flex: 1, display: 'flex', padding: '20pt', flexDirection: 'column', justifyContent: 'flex-end'}">
-                  <p>Sound by {{object.show.name.substr(0, 100)}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
+                  <p v-if="object.show">Sound by {{object.show.name.substr(0, 100)}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
                 </div>
                 <div
                     @click="togglePlayPause" :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
-                  <a :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" style="padding: 20pt">
-                    <img class="spinning" :src="object.images[0].url" style="width: 34pt; border-radius: 100%">
+                  <a :href="`${object.url}`" target="__blank" style="padding: 20pt">
+                    <img class="spinning" v-if="object && object.images instanceof Array && object.images.length > 0" :src="object.images[0].url" style="width: 34pt; border-radius: 100%">
                   </a>
                 </div>
               </div>
             </div>
           </swiper-slide>
         </swiper>
+         
         <div  v-else-if="status === 100" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center">
             <ClipLoader color="white" />
             <h1>Loading feed for you. Please wait</h1>
@@ -110,6 +112,9 @@
         <div v-else>
             <p>Loading Spotify Web Player</p>
         </div>
+        <div v-if="isLoadingMore" style="display: flex; align-items: center; justify-content: center; padding: 10pt;">
+           <ClipLoader color="white" /><span>Loading more</span>
+          </div>
         <audio loop ref="audio" />
     </div>
 
@@ -153,7 +158,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
             const player = ref(null);
             const audio = ref(null);
             const isLiked = ref(false);
-
+            const isLoadingMore = ref(false);
             const selectedIndex = ref(0);
             const media = ref(null);
             const constraints = { audio: true, video: false }
@@ -189,12 +194,16 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
                 selectedIndex.value = swiper.activeIndex;
                 const episode = feed.value[index];
                 isLiked.value = feed.value[index].isLiked;
+                
                 if (episode) {
                     play(episode);
                 }
+                if (!isLoadingMore.value && selectedIndex.value >= feed.value.length - 1) {
+                  fetchMore();
+                }
             }
             const share = (obj) => {
-                const link = `https://open.spotify.com/episode/${obj.id}?utm_source=swipecast`
+                const link = `${obj.url}}?utm_source=swipecast`
                 if (window.navigator.webkitstartactivity instanceof Function) {
                     var params = {
                         'action': 'http://webintents.org/share',
@@ -249,10 +258,20 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
               status.value = 100;
                 getPodcastFeed().then((result) => {
                    status.value = result.status
-                   feed.value = result.objects
+                   feed.value = [...feed.value, ...result.objects] 
+                   console.log(feed.value);
                    if (result.objects.length > 0) {
                      play(result.objects[0]);
                    }
+                });
+            }
+            const fetchMore = () => {
+              
+              isLoadingMore.value = true;
+                getPodcastFeed().then((result) => {
+                   status.value = result.status
+                   feed.value = [...feed.value, ...result.objects] 
+                   isLoadingMore.value = false;
                 });
             }
             const toggleLike = ($event, e) => {
@@ -280,6 +299,8 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
                 onStartFeedClicked,
                 refresh,
                 audio,
+                isLoadingMore,
+                fetchMore,
                 isLiked,
                 media,
                 playerState,

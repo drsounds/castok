@@ -19,20 +19,55 @@ class FeedController extends Controller {
             $api->setAccessToken($spotifyUser['token']);
         }
         $result = ['objects' => []];
+        $savedShows = [];
+        do {
+        $offset = rand(0, 5) * 10;
+        $keywords = [];
+        try {
         $savedShows = $api->getMySavedShows([
-          'limit' => 50
+          'limit' => 10,
+          'offset' => $offset
         ])->items;
+        if (count($savedShows) < 1) break;
+        } catch (\Exception $e) {
+
+        }
         shuffle($savedShows);
-        for($i = 0; $i < count($savedShows) && $i < 20; $i++) {
+        for($i = 0; $i < count($savedShows) && $i < 10; $i++) {
             $show = $savedShows[array_rand($savedShows)];
-            $episodes = $api->getShowEpisodes($show->show->id)->items;
+            $episodes = $api->getShowEpisodes($show->show->id, ['limit' => 10])->items;
             shuffle($episodes);
             if (count($episodes) > 0) {
                 $episode = $episodes[array_rand($episodes)];
-                $episode->isLiked = $api->myEpisodesContains([$episode->id]);
+                $episode->isLiked = false; // $api->myEpisodesContains([$episode->id]);
                 $episode->show = $show->show;
+                $episode->show->url = $episode->show->external_urls->spotify;
+                $episode->url = $episode->external_urls->spotify;
                 $result['objects'][] = $episode;
+                $keywords = explode( ' ', $episode->description); 
+                $episode->from = "following";
             }
+        }
+        $offset += 10;
+        break;
+      } while ($savedShows > 0); 
+        for ($i = 0; $i < 3; $i++) {  
+          $keyword = $keywords[array_rand($keywords)];
+          $relatedEpisodes = $api->search($keyword, 'episode')->episodes->items;
+          for ($i = 0; $i < 5 && $i < count($relatedEpisodes); $i++) {
+            $episode =  $relatedEpisodes[$i]; 
+         
+            $episode->url = $episode->external_urls->spotify;
+            $episode->show = (Object)[
+              'name' => $episode->name,
+              'id' => $episode->id,
+              'url' => $episode->url,
+              'uri' => $episode->uri,
+              'images' => $episode->images
+            ];
+            $episode->from = "search";
+            $result['objects'][] = $episode;
+          }
         }
         shuffle($result['objects']);
         return response()->json($result);
