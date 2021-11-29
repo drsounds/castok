@@ -140,7 +140,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
         props: {
             mode: {
                 type: String,
-                default: 'spotify'
+                default: 'preview'
             },
             spotifyAccessToken: {
                 type: String
