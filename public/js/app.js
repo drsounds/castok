@@ -20666,7 +20666,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     mode: {
       type: String,
-      "default": 'spotify'
+      "default": 'preview'
     },
     spotifyAccessToken: {
       type: String
