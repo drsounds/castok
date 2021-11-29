@@ -25138,7 +25138,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
                 maskImage: 'linear-gradient(-180deg, black, transparent)',
                 backgroundImage: 'url(' + object.images[0].url + ')',
-                filter: 'blur(50pt)',
                 backgroundSize: 'cover',
                 position: 'absolute',
                 opacity: 0.8,

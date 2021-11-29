@@ -22,7 +22,6 @@
                 :style="{
                   maskImage: 'linear-gradient(-180deg, black, transparent)',
                   backgroundImage: 'url(' + object.images[0].url + ')',
-                  filter: 'blur(50pt)',
                   backgroundSize: 'cover',
                   position: 'absolute',
                   opacity: 0.8,
