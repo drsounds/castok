@@ -81,7 +81,9 @@ class FeedController extends Controller {
             $result['objects'][] = $episode;
           }
         }
-        shuffle($result['objects']);
+        if (count($result['objects']) > 0) {
+          shuffle($result['objects']);
+        }
         return response()->json($result);
     }
 }
