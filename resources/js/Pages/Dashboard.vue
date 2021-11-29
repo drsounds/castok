@@ -58,9 +58,10 @@
                 <div
                     @click="togglePlayPause" :style="{color: 'white', flex: 1, display: 'flex', borderRadius: '20pt', padding: '5pt 20pt', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-end'}">
                     <img :src="object.images[0].url" style="{maxWidth: '50%'}" />
+                    <p class="uppercase">30 second preview</p>
                     <a target="__blank" :href="`https://open.spotify.com/show/${object.show.id}`" style="font-size: 10pt; padding: 1pt 3pt; border-radius: 28pt; color: white; font-weight: bold">{{object.show.name}}</a>
                     <a :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" >{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></a><br>
-                    <a  :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" class="btn btn-primary">Stream full episode on on Spotify</a>
+                    <a  :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" class="btn btn-primary">View on Spotify</a>
                 </div>
                 <div
                     @click="togglePlayPause" :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
