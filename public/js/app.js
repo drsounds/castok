@@ -25136,7 +25136,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 return _ctx.togglePlayPause && _ctx.togglePlayPause.apply(_ctx, arguments);
               }),
               style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
-                maskImage: 'linear-gradient(-180deg, black, transparent)',
+                maskImage: 'linear-gradient(-180deg, black, transparent 50%)',
                 backgroundImage: 'url(' + object.images[0].url + ')',
                 backgroundSize: 'cover',
                 position: 'absolute',

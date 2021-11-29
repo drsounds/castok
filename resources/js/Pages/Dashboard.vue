@@ -20,7 +20,7 @@
             v-if="object && object.images instanceof Array && object.images.length > 0"
                 @click="togglePlayPause"
                 :style="{
-                  maskImage: 'linear-gradient(-180deg, black, transparent)',
+                  maskImage: 'linear-gradient(-180deg, black, transparent 50%)',
                   backgroundImage: 'url(' + object.images[0].url + ')',
                   backgroundSize: 'cover',
                   position: 'absolute',
