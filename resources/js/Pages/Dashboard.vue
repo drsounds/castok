@@ -111,7 +111,7 @@
         <div v-else>
             <p>Loading Spotify Web Player</p>
         </div>
-        <div v-if="isLoadingMore" style="display: flex; align-items: center; justify-content: center; padding: 10pt;">
+        <div v-if="isLoadingMore && false" style="display: flex; align-items: center; justify-content: center; padding: 10pt;">
            <ClipLoader color="white" /><span>Loading more</span>
           </div>
         <audio loop ref="audio" />
