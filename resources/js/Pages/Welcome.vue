@@ -1,10 +1,15 @@
 <template>
   <div style="display: flex; align-items: center; justify-content: center; text-align: center; flex-direction: column; position: absolute; left: 0; top: 0; width: 100%; height: 100%;">
-    <h1>This app lets you discover podcasts on Spotify in a TikTok style</h1>
+    <div style="flex: 1"></div>
+      <h1 style="font-size: 5rem">SWIPECAST</h1>
+    <div style="flex: 1"></div>
+    <h1>This app lets you discover podcasts on Spotify in a TikTok style</h1><br />
     <a class="btn btn-spotify" href="/auth/spotify/redirect">Log in with Spotify</a>
+    <div style="flex: 1"></div>
+    <div>Made with ♥ by <a href="https://github.com/drsounds">@drsounds</a> from Lidköping, Sweden. </div>
   </div>
 
-     
+
 </template>
 
 <style scoped>

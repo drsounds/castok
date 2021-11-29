@@ -4,31 +4,36 @@
         <swiper
             v-if="status == 200"
             direction="vertical"
-            style="left: 0; top: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center" 
+            style="left: 0; top: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center"
             :slides-per-view="1"
             @swiper="onSwiper"
             @slideChange="onSlideChange"
+            @click="togglePlayPause"
         >
           <swiper-slide
+              @click="togglePlayPause"
               v-for="object in feed" :key="object.id"
               :style="{position: 'relative', height: '100%'}"
               @slidechange="onSlideChange"
           >
-            <div :style="{
-              backgroundImage: 'url(' + object.images[0].url + ')',
-              backgroundSize: 'cover',
-              position: 'absolute',
-              opacity: 0.5,
-              left: 0,
-              top: 0,
-              width: '100%',
-              height: '100%'
-            }">
+            <div
+                @click="togglePlayPause"
+                :style="{
+                  backgroundImage: 'url(' + object.images[0].url + ')',
+                  backgroundSize: 'cover',
+                  position: 'absolute',
+                  opacity: 0.5,
+                  left: 0,
+                  top: 0,
+                  width: '100%',
+                  height: '100%'
+                }">
             </div>
             <div
+                @click="togglePlayPause"
               :style="{
-             
-                  position: 'absolute', 
+
+                  position: 'absolute',
                   left: 0,
                   top: 0,
                   width: '100%',
@@ -38,7 +43,8 @@
                   flexDirection: 'column',
               }"
             >
-              <div 
+              <div
+                  @click="togglePlayPause"
                 :style="{
                   display: 'flex',
                   flexDirection: 'row',
@@ -47,22 +53,24 @@
                   flex: '1'
                 }"
               >
-                <div :style="{color: 'white', flex: 1, display: 'flex', borderRadius: '20pt', padding: '5pt 20pt', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-end'}">
+                <div
+                    @click="togglePlayPause" :style="{color: 'white', flex: 1, display: 'flex', borderRadius: '20pt', padding: '5pt 20pt', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-end'}">
                     <a target="__blank" :href="`https://open.spotify.com/show/${object.show.id}`" style="font-size: 10pt; padding: 1pt 3pt; border-radius: 28pt; color: white; font-weight: bold">{{object.show.name}}</a>
                     <a :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" >{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></a>
                     <a  :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" class="btn btn-primary">Stream on Spotify</a>
                 </div>
-                <div :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
+                <div
+                    @click="togglePlayPause" :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
                    <a :href="`https://open.spotify.com/show/${object.show.id}`" target="__blank">
                     <img :src="object.show.images[0].url" style="width: 34pt; border-radius: 100%">
                   </a>
                   <button class="ph-heart" @click="toggleLike(object)" style="font-size: 30pt" />
                   <button class="ph-share" @click="share(object)" style="font-size: 30pt" />
                   <div style="height: 30pt"></div>
-                  
+
                 </div>
               </div>
-              <div 
+              <div
                 :style="{
                   display: 'flex',
                   flexDirection: 'row',
@@ -71,16 +79,18 @@
                   flex: '0 0 50pt'
                 }"
               >
-                <div :style="{color: 'white', flex: 1, display: 'flex', padding: '20pt', flexDirection: 'column', justifyContent: 'flex-end'}">
+                <div
+                    @click="togglePlayPause" :style="{color: 'white', flex: 1, display: 'flex', padding: '20pt', flexDirection: 'column', justifyContent: 'flex-end'}">
                   <p>Sound by {{object.show.name.substr(0, 100)}} <span style="{opacity: 0.5}">{{object.published}}</span></p>
-                </div>  
-                <div :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
+                </div>
+                <div
+                    @click="togglePlayPause" :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
                   <a :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" style="padding: 20pt">
                     <img class="spinning" :src="object.images[0].url" style="width: 34pt; border-radius: 100%">
                   </a>
                 </div>
               </div>
-            </div> 
+            </div>
           </swiper-slide>
         </swiper>
         <div  v-else-if="status === 100" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center">
@@ -99,7 +109,7 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue'; 
+import { Swiper, SwiperSlide } from 'swiper/vue';
 import { getPodcastFeed } from "../actions/feed";
 import { toggleLikeEpisode } from '../actions/spotify';
 import 'swiper/css';
@@ -114,7 +124,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
     export default defineComponent({
 
         components: {
-            AppLayout, 
+            AppLayout,
             ClipLoader,
             Welcome,
             Swiper,
@@ -133,10 +143,10 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
             const status = ref(9);
             const spotifyDeviceId = ref(null);
             const player = ref(null);
-            const audio = ref(null); 
+            const audio = ref(null);
             const isLiked = ref(false);
 
- 
+
             const onSlideChange = (swiper) => {
                 const index = swiper.activeIndex;
                 const episode = feed.value[index];
@@ -145,16 +155,23 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
                     play(episode.audio_preview_url);
                 }
             }
-            const play = (url) => { 
+            const togglePlayPause = () => {
+                if (audio.value.paused) {
+                    audio.value.play()
+                } else {
+                    audio.value.pause()
+                }
+            }
+            const play = (url) => {
                 audio.value.autoPlay = true;
-                audio.value.src = url;  
+                audio.value.src = url;
                 audio.value.play()
             }
             const refresh = () => {
               status.value = 100;
                 getPodcastFeed().then((result) => {
                    status.value = result.status
-                   feed.value = result.objects 
+                   feed.value = result.objects
                    if (result.objects.length > 0) {
                      play(result.objects[0].audio_preview_url);
                    }
@@ -173,6 +190,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
                 feed,
                 player,
                 status,
+                togglePlayPause,
                 onSlideChange,
                 onStartFeedClicked,
                 refresh,
