@@ -264,7 +264,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
               })
             }
             const onStartFeedClicked = () => {
-                if (props.mode == 'spotify') {
+                if (props.mode === 'spotify') {
                     window.player.connect()
                 } else {
                     refresh()
