@@ -239,7 +239,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
             }
             const play = (obj) => {
                 if (props.mode === 'spotify') {
-                    playSpotifyTrack([obj.uri], spotifyDeviceId.value, props.spotifyAccessToken).then(() => {
+                    playSpotifyTrack([obj.uri], spotifyDeviceId.value, props.spotifyAccessToken, obj.duration_ms * 0.35).then(() => {
                     })
                 } else {
                     playPreviewTrack(obj.audio_preview_url)

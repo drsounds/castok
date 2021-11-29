@@ -20776,7 +20776,7 @@ __webpack_require__.r(__webpack_exports__);
 
     var play = function play(obj) {
       if (props.mode === 'spotify') {
-        (0,_actions_spotify__WEBPACK_IMPORTED_MODULE_2__.playSpotifyTrack)([obj.uri], spotifyDeviceId.value, props.spotifyAccessToken).then(function () {});
+        (0,_actions_spotify__WEBPACK_IMPORTED_MODULE_2__.playSpotifyTrack)([obj.uri], spotifyDeviceId.value, props.spotifyAccessToken, obj.duration_ms * 0.35).then(function () {});
       } else {
         playPreviewTrack(obj.audio_preview_url);
       }
@@ -27637,14 +27637,18 @@ function playSpotifyTrack(_x, _x2, _x3) {
 
 function _playSpotifyTrack() {
   _playSpotifyTrack = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(uris, deviceId, token) {
-    var result;
+    var pos,
+        result,
+        _args = arguments;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+            pos = _args.length > 3 && _args[3] !== undefined ? _args[3] : 0;
             result = axios__WEBPACK_IMPORTED_MODULE_1___default().put('/api/player', {
               deviceId: deviceId,
-              uris: uris
+              uris: uris,
+              pos: pos
             }, {
               headers: {
                 'Authorization': 'Bearer ' + token
@@ -27652,7 +27656,7 @@ function _playSpotifyTrack() {
             });
             return _context.abrupt("return", result);
 
-          case 2:
+          case 3:
           case "end":
             return _context.stop();
         }

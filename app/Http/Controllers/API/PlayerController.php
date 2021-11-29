@@ -15,9 +15,15 @@ class PlayerController extends Controller {
         $deviceId = $request->input('deviceId');
 
         $uris = $request->input('uris');
+        $pos = $request->input('pos', 0);
+
         $api->play($deviceId, [
             'uris' => $uris
-        ]);
+        ]);/*
+        $api->seek([
+            'device_id' => $deviceId,
+            'position_ms' => $pos,
+        ]);*/
         return response()->json(['status' => 200]);
     }
 }

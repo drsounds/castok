@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export async function playSpotifyTrack(uris, deviceId, token) {
-    const result = axios.put('/api/player', {deviceId, uris},{
+export async function playSpotifyTrack(uris, deviceId, token, pos = 0) {
+    const result = axios.put('/api/player', {deviceId, uris, pos},{
         headers: {
           'Authorization': 'Bearer ' + token
         }
