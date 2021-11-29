@@ -20685,6 +20685,7 @@ __webpack_require__.r(__webpack_exports__);
       audio: true,
       video: false
     };
+    var playerState = (0,vue__WEBPACK_IMPORTED_MODULE_7__.ref)('playing');
 
     var onSlideChange = function onSlideChange(swiper) {
       var index = swiper.activeIndex;
@@ -20719,8 +20720,10 @@ __webpack_require__.r(__webpack_exports__);
     var togglePlayPause = function togglePlayPause() {
       if (audio.value.paused) {
         audio.value.play();
+        playerState.value = 'playing';
       } else {
         audio.value.pause();
+        playerState.value = 'paused';
       }
     };
 
@@ -20768,6 +20771,7 @@ __webpack_require__.r(__webpack_exports__);
       audio: audio,
       isLiked: isLiked,
       media: media,
+      playerState: playerState,
       toggleLike: toggleLike
     };
   }
@@ -24903,17 +24907,17 @@ var _hoisted_1 = {
 };
 var _hoisted_2 = ["src"];
 var _hoisted_3 = ["href"];
-
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
-/* HOISTED */
-);
-
-var _hoisted_5 = ["href"];
-var _hoisted_6 = {
+var _hoisted_4 = ["href"];
+var _hoisted_5 = {
   style: {
     "{opacity": "0.5}"
   }
 };
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+/* HOISTED */
+);
+
 var _hoisted_7 = ["href"];
 var _hoisted_8 = ["href"];
 var _hoisted_9 = ["src"];
@@ -25081,7 +25085,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
               src: object.images[0].url,
               style: {
-                width: '100%'
+                width: '33%'
               }
             }, null, 8
             /* PROPS */
@@ -25101,16 +25105,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               }
             }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.show.name), 9
             /* TEXT, PROPS */
-            , _hoisted_3), _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+            , _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
               href: "https://open.spotify.com/episode/".concat(object.id),
               target: "__blank"
             }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.name) + " ", 1
             /* TEXT */
-            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.published), 1
+            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(object.published), 1
             /* TEXT */
             )], 8
             /* PROPS */
-            , _hoisted_5), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+            , _hoisted_4), _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
               href: "https://open.spotify.com/episode/".concat(object.id),
               target: "__blank",
               "class": "btn btn-primary"
@@ -25141,6 +25145,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             , _hoisted_9)], 8
             /* PROPS */
             , _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+              "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('ph-' + (_ctx.playerState === 'playing' ? 'pause' : 'play') + '-circle'),
+              style: {
+                "font-size": "30pt"
+              }
+            }, null, 2
+            /* CLASS */
+            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
               style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)([{
                 color: _ctx.isLiked ? 'red' : 'white'
               }, {

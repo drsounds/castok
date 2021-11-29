@@ -56,20 +56,22 @@
               >
                 <div
                     @click="togglePlayPause" :style="{color: 'white', flex: 1, display: 'flex', borderRadius: '20pt', padding: '5pt 20pt', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-end'}">
-                    <img :src="object.images[0].url" :style="{width: '100%'}" />
+                    <img :src="object.images[0].url" :style="{width: '33%'}" />
                     <div>
                         <av-media :media="media" />
                     </div>
-                    <a target="__blank" :href="`https://open.spotify.com/show/${object.show.id}`" style="font-size: 10pt; padding: 1pt 3pt; border-radius: 28pt; color: white; font-weight: bold">{{object.show.name}}</a><br>
-                    <a :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" >{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></a>
+                    <a target="__blank" :href="`https://open.spotify.com/show/${object.show.id}`" style="font-size: 10pt; padding: 1pt 3pt; border-radius: 28pt; color: white; font-weight: bold">{{object.show.name}}</a>
+                    <a :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" >{{object.name}} <span style="{opacity: 0.5}">{{object.published}}</span></a><br>
                     <a  :href="`https://open.spotify.com/episode/${object.id}`" target="__blank" class="btn btn-primary">Stream full episode on on Spotify</a>
                 </div>
                 <div
                     @click="togglePlayPause" :style="{display: 'flex', alignItems: 'center', padding: '50pt', gap: '13pt', flex: '0 0 64pt', padding: 20, flexDirection: 'column', justifyContent: 'flex-end'}">
+
                    <a :href="`https://open.spotify.com/show/${object.show.id}`" target="__blank">
                     <img :src="object.show.images[0].url" style="width: 34pt; border-radius: 100%">
                   </a>
-                  <button :style="{color: isLiked ? 'red' : 'white'}" :class="'ph-heart' + (isLiked ? '-fill' : '')" @click="toggleLike($event, object)" style="font-size: 30pt" />
+                    <button :class="'ph-' + (playerState === 'playing' ? 'pause' : 'play') + '-circle'" style="font-size: 30pt" />
+                    <button :style="{color: isLiked ? 'red' : 'white'}" :class="'ph-heart' + (isLiked ? '-fill' : '')" @click="toggleLike($event, object)" style="font-size: 30pt" />
                   <button class="ph-share" @click="share(object)" style="font-size: 30pt" />
                   <div style="height: 30pt"></div>
 
@@ -154,6 +156,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
             const selectedIndex = ref(0);
             const media = ref(null);
             const constraints = { audio: true, video: false }
+            const playerState = ref('playing');
 
             const onSlideChange = (swiper) => {
                 const index = swiper.activeIndex;
@@ -187,8 +190,10 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
             const togglePlayPause = () => {
                 if (audio.value.paused) {
                     audio.value.play()
+                    playerState.value = 'playing'
                 } else {
                     audio.value.pause()
+                    playerState.value = 'paused'
                 }
             }
             const play = (url) => {
@@ -231,6 +236,7 @@ import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
                 audio,
                 isLiked,
                 media,
+                playerState,
                 toggleLike
             }
         }
