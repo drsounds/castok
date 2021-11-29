@@ -34,6 +34,9 @@ class FeedController extends Controller {
         }
         shuffle($savedShows);
         for($i = 0; $i < count($savedShows) && $i < 10; $i++) {
+          if (count($savedShows) < 1) {
+            break;
+          }
             $show = $savedShows[array_rand($savedShows)];
             $episodes = $api->getShowEpisodes($show->show->id, ['limit' => 10])->items;
             shuffle($episodes);
